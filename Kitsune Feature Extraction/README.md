@@ -46,3 +46,8 @@ Dataset Preprocessing is having the four folders:
 	This directory has two subdirectories:
 	i)  Test and Train Sets: It contains separate testing and training CSV files
 	ii) .ipynb_checkpoints: It has two jupyter notebook files, one notebook splits the datasets into training and testing sets. The other notebook trains and evaluates models on the UQ-IoT Dataset.
+
+5. Cross-Dataset Evaluation:
+	This directory contains a Jupyter notebooook and a directory named outpts:
+	i) The jupyter notebook is used for cross-dataset evaluation. It  trains a model on training set of one dataset and tests the trained model on the testing set of another dataset. The results show that the models failed to generalize across different datasets, even though they achieve near-perfect F1 scores when both training nad testing performed on the same dataset. 
+	ii) The outputs directory contains the results of the above notebook. These inculde confusion matrices of all 36 experiments (6 dataset combinations X 6 models), a heatmap for visualize the results and an Excel file that shows the results in tabular format. 
