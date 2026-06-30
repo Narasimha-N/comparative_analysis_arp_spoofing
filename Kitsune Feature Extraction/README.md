@@ -1,3 +1,19 @@
+Datasets:
+1. CICIoT2023
+2. IoT Network Intrusion Dataset
+3. UQIoT Dataset
+
+Machine Learning Models:
+1. Random Forest
+2. XGBoost
+3. Decision Tree
+4. KNN
+5. SVM
+6. DNN
+7. Logistic Regression
+
+
+
 For feature Extraction, Kitsune Feature Extraction method is used. The entire Github repository (https://github.com/ymirsky/Kitsune-py) was downloaded to the host machine and a custom python script was developed to extract required features from PCAP files.  
 
 The Kitsune Feature Extraction module is responsible only for generating 100 statistical features using the python scripts FeatureExtraction.py, netstat.py and AfterImage.py. 
