@@ -68,7 +68,7 @@ Dataset Preprocessing is having the four folders:
 	i) The jupyter notebook is used for cross-dataset evaluation. It  trains a model on training set of one dataset and tests the trained model on the testing set of another dataset. The results show that the models failed to generalize across different datasets, even though they achieve near-perfect F1 scores when both training nad testing performed on the same dataset. 
 	ii) The outputs directory contains the results of the above notebook. These inculde confusion matrices of all 36 experiments (6 dataset combinations X 6 models), a heatmap for visualize the results and an Excel file that shows the results in tabular format. 
 	
-	Additionally, there are three pickle (.pkl) files. One is the best generalizing model (trained on IoT Network Intrusion Dataset and tested on Mininet Dataset), another one is the scaler which is used in that best generalizing model and the remaining file is common features across all datasets.
+	Additionally, there is a pickle (.pkl) file tha is the best generalizing model (trained on IoT Network Intrusion Dataset and tested on Mininet Dataset), then it will bw used for real time detection in mininet Environment.
 
 6. MininetDatasetEvaluation:
 	This directory has two subdirectories:
