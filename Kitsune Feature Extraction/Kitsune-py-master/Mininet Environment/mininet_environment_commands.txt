@@ -1,0 +1,10 @@
+sh ovs-vsctl add-port s1 mirror0 -- set interface mirror0 type=internal
+sh ovs-vsctl -- --id=@out get port mirror0 -- --id=@m create mirror name=mymirror select-all=true output-port=@out -- set bridge s1 mirrors=@m 
+sh ip link set mirror0 up
+sh xterm -fa 'Monospace' -fs 12 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Monitor" &
+h2 xterm -fa 'Monospace' -fs 12 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Victim1" &
+h3 xterm -fa 'Monospace' -fs 12 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Victim2" &
+h4 xterm -fa 'Monospace' -fs 12 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Victim3" &
+h5 xterm -fa 'Monospace' -fs 12 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Victim4" &
+h6 xterm -fa 'Monospace' -fs 12 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Victim5" &
+h1 xterm -fa 'Monospace' -fs 12 -xrm 'XTerm.vt100.allowTitleOps: false' -T "Attacker" 
