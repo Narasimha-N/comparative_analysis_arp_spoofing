@@ -1,0 +1,104 @@
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\small,
+  >={Stealth[length=2.5mm]},
+  node distance=6mm,
+  % ---- node styles ----
+  proc/.style={
+    rectangle, rounded corners=2pt, draw=black!70, line width=0.5pt,
+    fill=black!3, align=center, minimum height=8mm, inner sep=4pt,
+    text width=32mm},
+  data/.style={
+    cylinder, shape border rotate=90, aspect=0.18, draw=black!70,
+    line width=0.5pt, fill=black!8, align=center, inner sep=3pt,
+    minimum height=9mm, text width=20mm},
+  core/.style={
+    rectangle, rounded corners=2pt, draw=black!85, line width=1.1pt,
+    fill=black!12, align=center, minimum height=13mm, inner sep=5pt,
+    text width=42mm},
+  result/.style={
+    rectangle, rounded corners=2pt, draw=black!70, line width=0.5pt,
+    fill=black!3, align=center, minimum height=8mm, inner sep=4pt,
+    text width=34mm},
+  lbl/.style={font=\footnotesize\itshape, text=black!60},
+  flow/.style={->, draw=black!75, line width=0.6pt},
+  grp/.style={rounded corners=4pt, draw=black!45, dashed, line width=0.7pt},
+]
+ 
+% Datasets 
+\node[data] (d1) {CIC\-IoT2023};
+\node[data, right=5mm of d1] (d2) {IoT\-NID};
+\node[data, right=5mm of d2] (d3) {UQ\-IoT\-IDS};
+ 
+% Mininet environment 
+\node[proc, below left=14mm and 2mm of d1, text width=34mm] (mn)
+  {Emulated Mininet Network\\{\footnotesize OVS switch, hosts, port mirror}};
+\node[data, below=7mm of mn, text width=44mm] (mnpcap)
+  {Attack \& benign captures\\{\footnotesize (generated separately)}};
+ 
+% Shared FEature Extarction core
+\node[core, below=20mm of d2] (core)
+  {\textbf{Shared Feature\\Extraction Core}\\[1pt]
+   {\footnotesize packet\-level incremental statistics}};
+ 
+% Offline evaluation
+\node[proc, below=8mm of core, text width=46mm] (align)
+  {Feature Schema Alignment\\{\footnotesize intra\- then inter\-dataset}};
+\node[proc, below=of align, text width=46mm] (prep)
+  {Preprocessing\\{\footnotesize split, then scale \& resample}};
+\node[proc, below=of prep, text width=46mm] (train)
+  {Model Training\\{\footnotesize seven models on each dataset}};
+\node[result, below=of train, text width=48mm] (eval)
+  {Cross\-Dataset Evaluation Matrix\\{\footnotesize + per\-model SHAP attributions}};
+ 
+% Real-time detection engine
+\node[proc, right=22mm of train, text width=34mm] (rt1)
+  {Live Traffic Capture\\{\footnotesize per\-packet sniffing}};
+\node[proc, below=of rt1, text width=34mm] (rt2)
+  {Real\-Time Classification\\{\footnotesize using best trained model}};
+\node[result, below=of rt2, text width=34mm] (rt3)
+  {Detection Dashboard\\{\footnotesize reports attack source}};
+ 
+% Flows
+\draw[flow] (d1) -- (core);
+\draw[flow] (d2) -- (core);
+\draw[flow] (d3) -- (core);
+\draw[flow] (mn) -- (mnpcap);
+\draw[flow] (mnpcap.south) |- ([yshift=3mm]core.west) -- (core.west);
+ 
+\draw[flow] (core) -- (align);
+\draw[flow] (align) -- (prep);
+\draw[flow] (prep) -- (train);
+\draw[flow] (train) -- (eval);
+ 
+% best model feeds the real-time branch (orthogonal route)
+\draw[flow] (train.east) -| ($(train.east)!0.5!(rt2.west)$) |- (rt2.west)
+  node[pos=0.25, above, lbl] {best model};
+\draw[flow] (rt1) -- (rt2);
+\draw[flow] (rt2) -- (rt3);
+% real-time capture reuses the same extraction core (dotted, conceptual)
+\draw[->, draw=black!55, line width=0.6pt, dash pattern=on 1.5pt off 1.5pt]
+  (core.east) -| (rt1.north)
+  node[pos=0.25, above, lbl] {shared extractor reused};
+ 
+% ======================= PIPELINE GROUPING =======================
+\begin{scope}[on background layer]
+  \node[grp, fill=black!2, fit=(align)(prep)(train)(eval), inner sep=6mm] (goff) {};
+  \node[grp, fill=black!2, fit=(mn)(mnpcap), inner sep=5mm] (gmn) {};
+  \node[grp, fill=black!2, fit=(rt1)(rt2)(rt3), inner sep=5mm] (grt) {};
+\end{scope}
+ 
+\node[lbl, anchor=north west] at (goff.north west) {\ Offline Dataset Pipeline};
+\node[lbl, anchor=south west] at (gmn.north west) {Mininet Synthetic Dataset Pipeline};
+\node[lbl, anchor=south west] at (grt.north west) {Real\-Time Detection Pipeline};
+ 
+\end{tikzpicture}
+    }
+    \caption{High-level system architecture, showing the offline dataset
+    pipeline, the Mininet synthetic dataset pipeline, and the real-time
+    detection pipeline sharing a common feature extraction core.}
+    \label{fig:architecture}
+\end{figure}
