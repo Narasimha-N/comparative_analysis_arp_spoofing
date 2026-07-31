@@ -66,7 +66,7 @@ Dataset Preprocessing is having the four folders:
 5. Cross-Dataset Evaluation:
 	This directory contains a Jupyter notebooook and a directory named outpts:
 	i) The jupyter notebook is used for cross-dataset evaluation. It  trains a model on training set of one dataset and tests the trained model on the testing set of another dataset. The results show that the models failed to generalize across different datasets, even though they achieve near-perfect F1 scores when both training nad testing performed on the same dataset. 
-	ii) The outputs directory contains the results of the above notebook. These inculde confusion matrices of all 36 experiments (6 dataset combinations X 6 models), a heatmap for visualize the results and an Excel file that shows the results in tabular format. 
+	ii) The outputs directory contains the results of the above notebook. These inculde confusion matrices of all 84 experiments (12 dataset combinations X 7 models), a heatmap for visualize the results and an Excel file that shows the results in tabular format. 
 	
 	Additionally, there is a pickle (.pkl) file tha is the best generalizing model (trained on IoT Network Intrusion Dataset and tested on Mininet Dataset), then it will bw used for real time detection in mininet Environment.
 
@@ -74,4 +74,15 @@ Dataset Preprocessing is having the four folders:
 	This directory has two subdirectories:
 	i)  Test and Train Sets: It contains separate testing and training CSV files
 	ii) .ipynb_checkpoints: It has two jupyter notebook files, one notebook splits the datasets into training and testing sets. The other notebook trains and evaluates models on the UQ-IoT Dataset.
+
+
+In the real-tine evaluation, the mininet environment was used which helps to build the network of 7 hosts (one attacker, one switch and five victims).
+
+Within the Mininet Environment folder inside the Kitsune-py-master repo, there are several files namely:
+1. attack.py: the scapy-based python script used to generate ARP spoofing attack traffic
+2. best_cross_dataset_model_dnn.pkl: the pickle model that extract from the best generalizing model in cross-dataset evaluation notebook.
+3. detector.py: The script that used to detect the attack through sniffing the packet in real-time, parsing it into the same Kitsune feature extraction method which was used in offline feature extraction from the PCAp files, then using the best generalizing model, it will detect yhe attack packets and print the same packets information on to the Falsk Dashboard with metrics such as tatal packets measured, mean latency, CPU usage, Memory usage, False positive, false negative, true positive and true negative.
+4. final_feature_columns.pkl and scaler.pkl: Pickle files that stores the feature columns and applied scaler on the dataset which generalize best in the cross-dataset evaluation.  
+5. generate_benign_traffic_victim_n.sh: These 5 files are used to generate benign traffic on all 5 victim hosts.
+6. Mininet_environment_commands.txt: The architecture of the mininet environment. Using this file, using the command "sudo mn -- topo single , 6 -- ipbase =10.0.0.0/24 -- nat -- post mininet_environment_commands.txt", the mininet environment is created.
 	
