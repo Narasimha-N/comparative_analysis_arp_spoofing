@@ -23,7 +23,7 @@ measure_metrics = True          # If this is false, the detector will not measur
 # this is required for false positive rate, detection rate and retention ratio,
 # because those metrics need the true label of each packet.
 # we can find it once inside Mininet with ifconfig on the host h1  
-attacker_mac = "ba:55:f3:83:4b:46"  # helps to find the TP,TN,FP,FN
+attacker_mac = "ea:51:4e:e6:c0:79"  # helps to find the TP,TN,FP,FN
 
 # offline performance of this DNN on the Mininet test set (combination 6) in cross-dataset_evaluation notebook.
 # used only to compute the retention ratios = live_metric / offline_metric.
@@ -33,7 +33,7 @@ offline_recall = 0.9993        #  offline recall (detection rate) for this model
 offline_f1 = 0.8528            #  offline attack-class F1 for this model
 
 cpu_sample_interval = 1.0       # seconds between CPU/memory samples
-metrics_csv = "metrics_summary.csv"   # single output CSV for the whole run
+metrics_csv = "run10.csv"   # single output CSV for the whole run
 
 class TorchDNN(nn.Module):
     def __init__(self, n_features):
