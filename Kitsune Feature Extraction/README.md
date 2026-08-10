@@ -85,4 +85,6 @@ Within the Mininet Environment folder inside the Kitsune-py-master repo, there a
 4. final_feature_columns.pkl and scaler.pkl: Pickle files that stores the feature columns and applied scaler on the dataset which generalize best in the cross-dataset evaluation.  
 5. generate_benign_traffic_victim_n.sh: These 5 files are used to generate benign traffic on all 5 victim hosts.
 6. Mininet_environment_commands.txt: The architecture of the mininet environment. Using this file, using the command "sudo mn -- topo single , 6 -- ipbase =10.0.0.0/24 -- nat -- post mininet_environment_commands.txt", the mininet environment is created.
+7. Runs directory contains the CSV files of five runs which are recorded on the Mininet live evaluation.
+8. Screenshots directory consists of some screenshots of Mininet environment configutaion and live dashboard. 
 	
